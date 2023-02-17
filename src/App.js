@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import TakeInput from "./components/TakeInput";
 import TaskList from "./components/TaskList";
 import "./index";
@@ -16,6 +16,10 @@ function App() {
     newArrayItem.splice(key, 1);
     setTask([...newArrayItem]);
   };
+
+  useEffect(()=>{
+    document.title = "Note Your Tasks"
+  },[])
 
   return (
     <div className="">
