@@ -1,45 +1,41 @@
 import { useState } from "react";
+import TakeInput from "./components/TakeInput";
+import TaskList from "./components/TaskList";
 import "./index";
 
 function App() {
-  const [input, setInput] = useState("");
-  // console.log(input);
   const [task, setTask] = useState([]);
 
-  // console.log(task);
-
   const addTask = (input) => {
-    setTask([...task, input]);
+    if(input !== '')
+      setTask([...task, input]);
+  };
+
+  const deleteTask = (key) => {
+    let newArrayItem = [...task];
+    newArrayItem.splice(key, 1);
+    setTask([...newArrayItem]);
   };
 
   return (
     <div className="">
       <div className="flex flex-col items-center justify-center m-5   ">
-        <div className="flex ">
-          <input
-            className="py-3 px-6 "
-            placeholder="Enter the Task"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-          />
-          <button
-            onClick={() => {
-              addTask(input);
-              setInput('');
-            }}
-            className="text-white bg-red-400 py-3 px-6"
-          >
-            Submit
-          </button>
-        </div>
+        <TakeInput addTask={addTask} />
 
-        <div className="flex flex-col py-2">
-          {task && (
-            <div className="border b-2 px-6 py-3 rounded-lg m-5 text-white">
-              {task}
-            </div>
-          )}
-
+        <h1 className="text-center text-2xl font-bold p-2 text-amber-500">
+          Remaining Tasks To Done
+        </h1>
+        <div className="flex flex-col m-5 border border-yellow-700 ">
+          {task.map((item, i) => {
+            return (
+              <TaskList
+                key={i}
+                index={i}
+                tasklist={item}
+                deleteItems={deleteTask}
+              />
+            );
+          })}
         </div>
       </div>
     </div>
